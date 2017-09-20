@@ -13,4 +13,7 @@
 # Start writing the data
 POST /importer/startLogging           tradr.importer.MainController.startLogging()
 # Stop writing the data
-POST /importer/stopLogging           tradr.importer.MainController.stopLogging()
+POST /importer/stopLogging            tradr.importer.MainController.stopLogging()
+
+#Start a debuggin stream
+POST /importer/startDebuggingStream   tradr.importer.MainController.startDebuggingStream()

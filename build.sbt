@@ -17,10 +17,12 @@ lazy val root = (project in file("."))
         version := "1.0.0",
         scalaVersion := "2.12.2",
         libraryDependencies ++= libdeps
+
       )
     )
   .enablePlugins(PlayScala)
   .enablePlugins(sbtdocker.DockerPlugin, JavaAppPackaging)
+
 
 
 val productionConfFileSource = new File("/home/leifblaese/Dropbox/Privat/Tradr/production.conf")
@@ -37,31 +39,3 @@ dockerfile in docker := {
   }
 }
 
-
-
-// Docker commands
-//packageName in Docker := packageName.value
-//version in Docker := version.value
-
-//dockerBaseImage := "java"
-//dockerRepository := Some("lbl")
-//dockerExposedPorts := Seq(9000, 9443)
-//dockerExposedVolumes := Seq("/opt/tradr-importer/logs")
-//defaultLinuxInstallLocation in Docker := "/opt/tradr-importer"
-
-//dockerCommands := Seq(
-//  Cmd("FROM", "java"),
-//  Cmd("WORKDIR", defaultLinuxInstallLocation.value),
-//  Cmd("ADD", Array("/home/leifblaese/Dropbox/Privat/Tradr/production.conf", "/opt/production.conf"),
-//  Cmd("RUN","List(chown, -R, daemon:daemon, .)"),
-//  Cmd("EXPOSE",WrappedArray(9000 9443)),
-//  Cmd(RUN,List(mkdir, -p, /opt/tradr-importer/logs)),
-//  Cmd(RUN,List(chown, -R, daemon:daemon, /opt/tradr-importer/logs)),
-//  Cmd(VOLUME,List(/opt/tradr-importer/logs))
-//)
-
-// Adds additional packages into Twirl
-//TwirlKeys.templateImports += "tradr.controllers._"
-
-// Adds additional packages into conf/routes
-// play.sbt.routes.RoutesKeys.routesImport += "tradr.binders._"
