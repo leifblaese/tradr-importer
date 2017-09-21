@@ -1,6 +1,7 @@
 package tradr.importer
 
 
+import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 import akka.actor.ActorSystem
@@ -25,6 +26,8 @@ import play.api.Logger
 import play.api.libs.json.Json
 import tradr.common.PricingPoint
 
+import scala.concurrent.duration.FiniteDuration
+
 object MainController {
 
 
@@ -46,10 +49,13 @@ object MainController {
         quoteHomeConversionFactors = None,
         unitsAvailable = None
       ).asInstanceOf[PricingStreamItem]
-      Source.repeat[PricingStreamItem](item)
+
+      Source.tick[PricingStreamItem](
+        initialDelay = FiniteDuration(1, TimeUnit.SECONDS),
+        interval = FiniteDuration(1, TimeUnit.SECONDS),
+        tick = item)
     }
   }
-
 
   private[this] def getProducerSettings(conf: Config)(implicit system: ActorSystem): ProducerSettings[Array[Byte], String] = {
     val kafkaIp = conf.getString("kafka.ip")
@@ -153,6 +159,8 @@ class MainController @Inject() (implicit ec: ExecutionContext, cc: ControllerCom
     Logger.info("Stopping logging")
     if (killSwitch.isDefined) {
       killSwitch.get.shutdown()
+      pricingStream = None
+      killSwitch = None
       Ok("Stream stopped")
     } else {
       MethodNotAllowed("No killswitch found")
