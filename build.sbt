@@ -4,8 +4,8 @@ lazy val libdeps = Seq(
   "org.scalatestplus.play" %% "scalatestplus-play" % "3.1.0" % Test,
   specs2 % Test ,
   "com.msilb" % "scalanda-v20_2.12" % "0.1.2",
-  "com.typesafe" % "config" % "1.3.1",
-  "com.typesafe.akka" %% "akka-stream-kafka" % "0.16"
+  "com.typesafe.akka" %% "akka-stream-kafka" % "0.16",
+  "tradr" %% "tradr-common" % "0.0.1"
 )
 
 
